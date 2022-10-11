@@ -2468,6 +2468,11 @@ check-types@^8.0.3:
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-8.0.3.tgz#3356cca19c889544f2d7a95ed49ce508a0ecf552"
   integrity sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==
 
+chinese-conv@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/chinese-conv/-/chinese-conv-1.0.1.tgz#c29edcaecf69c2490de86e5d268af71ae2f93051"
+  integrity sha512-LSjcG3ZwgEfjFHjqQc8HFvktEmapI6Y8s14LfmJcJAbFg5+6gPstndYHC6lfmKb+sU8+R5YQzSV95OBerdoUfA==
+
 "chokidar@>=3.0.0 <4.0.0", chokidar@^3.4.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"

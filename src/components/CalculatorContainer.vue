@@ -4,7 +4,7 @@
       @click.stop="showDrawer"
       v-show="machineDataManager.machines.length"
     >
-      已儲存機體列表
+      已儲存配置列表
     </v-btn>
     <v-btn
       @click="download"
@@ -14,7 +14,7 @@
     <v-btn
       @click="copy"
     >
-      取得機體網址
+      取得分享網址
       <v-icon v-if="copied" color="green">
         mdi-check
       </v-icon>

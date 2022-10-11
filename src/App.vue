@@ -5,10 +5,10 @@
       dark
     >
       <h3 class="d-flex align-center">
-        GBMDB :Revive
+        ETADB
       </h3>
       <v-tabs>
-        <v-tab to="/revive">零件</v-tab>
+        <v-tab to="/revive">回想</v-tab>
         <v-tab to="/calculator">計算機</v-tab>
         <v-tab to="/machines">機體</v-tab>
         <v-tab to="/pilots">駕駛</v-tab>
@@ -18,7 +18,7 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/alivedise/vue-gbm-alive"
+        href="https://github.com/alivedise/et-alive"
         target="_blank"
         text
       >
@@ -35,7 +35,7 @@
         cols="12"
       >
         <h5>The copyright of the data used on this site is owned by the following companies</h5>
-        </h5>©BANDAI NAMCO Entertainment Inc.</h5>
+        </h5>©光焰網路科技</h5>
       </v-col>
     </v-footer>
   </v-app>
