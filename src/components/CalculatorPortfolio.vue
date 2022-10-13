@@ -193,7 +193,7 @@
             :min="1"
             class="slider"
             :value="calculator.hp"
-            :thumb-label="true"
+            thumb-label="always"
             @change="updateHp"
           />
           <v-card-actions>
@@ -265,5 +265,6 @@ export default {
   position: absolute;
   bottom: -35px;
   width: 100%;
+  z-index: 9999;
 }
 </style>
