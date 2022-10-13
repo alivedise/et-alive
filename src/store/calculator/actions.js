@@ -7,6 +7,11 @@ const actions = {
     dispatch,
     rootGetters,
   }, data) {
+    if (data && data.echo) {
+      if (data.echo.series.indexOf('神眠') >= 0 || data.echo.series.indexOf('天司') >= 0) {
+        commit('clearExistingGodPrisonEcho', rootGetters['echo/echoMapById']);
+      }
+    }
     commit('updateActiveEcho', data);
     dispatch('setAttributeIfNecessary', ATTRIBUTES.getIndex(rootGetters['echo/echoMapById'][data.echo.id].attribute));
   },
@@ -28,7 +33,6 @@ const actions = {
   },
   loadData({
     commit,
-    state,
   }, data) {
     data = JSON.parse(lzbase62.decompress(data));
     const [ version, echo, machine, chara, attribute, hp, subEchoLimit] = data;

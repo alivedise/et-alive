@@ -13,6 +13,20 @@ const mutations = {
       e.update(echo[i]);
     });
   },
+  clearExistingGodPrisonEcho(state, map) {
+    state.echo.forEach((e) => {
+      if (!e.id) {
+        return;
+      }
+      const d = map[e.id];
+      if (!d) {
+        return;
+      }
+      if (d.series.indexOf('神眠') >= 0 || d.series.indexOf('天司') >= 0) {
+        e.update([0, 0, 0, 0, 0, 0]);
+      }
+    });
+  },
   updateMach(state, data) {
     state.mach.forEach((e, i) => e.update(data[i]));
   },
