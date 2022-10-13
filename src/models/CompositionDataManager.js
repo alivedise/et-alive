@@ -6,6 +6,9 @@ export default class MachineDataManager {
   constructor() {
     this.$comps = [];
     this.getList();
+    if (this.getLatestData()) {
+      this.hasLocalData = true;
+    }
   }
 
   getList() {
@@ -27,6 +30,7 @@ export default class MachineDataManager {
   getSavingDataKey() {
     let emptyId = this.$comps.length;
     if (emptyId >= this.MAX_SLOT) {
+      console.warn('OVERLIMIT');
       emptyId = this.$comps.sort((a, b) => {
         if (a.timestamp > b.timestamp) {
           return 1;
@@ -44,11 +48,22 @@ export default class MachineDataManager {
     return this.$comps;
   }
 
+  getLatestData() {
+    return window.localStorage.getItem("etac-latest-data") || '';
+  }
+
+  getLatestId() {
+    return window.localStorage.getItem("etac-latest-id") || '';
+  }
+
   save(data) {
-    let id = data.id >= 0 ? data.id : this.getSavingDataKey();
+    let id = (data.id !== '' && data.id >= 0) ? data.id : this.getSavingDataKey();
     data.id = id;
     data.timestamp = new Date().getTime();
     window.localStorage.setItem(`${this.PREFIX}${id}`, JSON.stringify(data));
+
+    window.localStorage.setItem("etac-latest-data", data.data);
+    window.localStorage.setItem("etac-latest-id", id);
     return id;
   }
 }

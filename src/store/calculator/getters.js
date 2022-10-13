@@ -318,6 +318,12 @@ const theGetters = {
   leaders(state, getters, rootState, rootGetters) {
     return `${getters.main ? getters.main.nick : '-'}-${getters.support ? getters.support.nick : '-'}`;
   },
+  activeAttribute(state) {
+    if (state.attribute === -1 || state.attribute === '') {
+      return '無';
+    }
+    return ATTRIBUTES.LIST[state.attribute] || '無';
+  },
   guessAttributeColor(state) {
     if (state.attribute === -1 || state.attribute === '') {
       return '';
@@ -334,7 +340,7 @@ const theGetters = {
       // id, skill level, echo level, bonus level,
     });
     const data = [
-      1, // data versioning
+      state.version, // data versioning
       rows, // echo data
       rowsMach, // machine data
       [], // chara data

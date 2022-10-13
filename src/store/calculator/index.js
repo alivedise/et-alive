@@ -19,6 +19,7 @@ function generateChara() {
 }
 
 const state = {
+  version: 1,
   attribute: -1,
   echo: generateEcho(),
   mach: generateMachine(),

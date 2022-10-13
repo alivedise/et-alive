@@ -1,46 +1,41 @@
 <template>
   <v-container>
-    <v-btn
-      @click.stop="showDrawer"
-      v-show="compositionDataManager.compositions.length"
-    >
-      已儲存配置列表
-    </v-btn>
-    <v-btn
-      @click="download"
-    >
-      下載配置圖
-    </v-btn>
-    <v-btn
-      @click="copy"
-    >
-      取得分享網址
-      <v-icon v-if="copied" color="green">
-        mdi-check
-      </v-icon>
-    </v-btn>
-    <v-btn
-      @click="refresh"
-      color="secondary"
-      v-show="false"
-    >
-      強制更新資料
-    </v-btn>
-    <v-btn v-if="name" outlined>
-      {{name}}
-    </v-btn>
+    <v-row>
+      <v-btn
+        @click.stop="showDrawer"
+        v-show="composition.manager.compositions.length"
+      >
+        已儲存配置列表
+      </v-btn>
+      <v-btn
+        @click="download"
+      >
+        下載配置圖
+      </v-btn>
+      <v-btn
+        @click="copy"
+      >
+        取得分享網址
+        <v-icon v-if="copied" color="green">
+          mdi-check
+        </v-icon>
+      </v-btn>
+      <v-btn
+        @click="createNew"
+        color="secondary"
+      >
+        新建
+      </v-btn>
+      <LatestDataLoader @load="loadLocal" />
+    </v-row>
     <SavedCompositionList
       :drawer="drawer"
       ref="list"
-      :compositionDataManager="compositionDataManager"
       @load="load"
     />
-    <CalculatorPortfolio />
     <AdvancedCalculator
       ref="calculator"
-      :compositionDataManager="compositionDataManager"
       @active="setActive"
-      @namechange="setName"
     />
   </v-container>
 </template>
@@ -48,29 +43,30 @@
 <script>
 import SavedCompositionList from '@/components/SavedCompositionList.vue';
 import AdvancedCalculator from '@/components/AdvancedCalculator.vue';
-import MachineDataManager from '@/models/CompositionDataManager';
-import CalculatorPortfolio from '@/components/CalculatorPortfolio.vue';
+import LatestDataLoader from '@/components/LatestDataLoader.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'CalculatorContainer',
   components: {
     SavedCompositionList,
     AdvancedCalculator,
-    CalculatorPortfolio,
+    LatestDataLoader,
   },
   data() {
     return {
-      compositionDataManager: new MachineDataManager(),
       drawer: false,
       forceRefresed: false,
       copied: false,
-      name: '',
     };
   },
   watch: {
     '$route.path'() {
       this.copied = false;
     },
+  },
+  computed: {
+    ...mapState(['composition']),
   },
   methods: {
     copy() {
@@ -85,11 +81,14 @@ export default {
     showDrawer() {
       this.$refs.list.drawer = true;
     },
-    setName(name) {
-      this.name = name;
+    createNew() {
+      this.$refs.calculator.emptyData();
     },
     load(data) {
-      this.$refs.calculator.loadMachineData(data);
+      this.$refs.calculator.loadSpecificData(data);
+    },
+    loadLocal() {
+      this.$refs.calculator.loadLocalData();
     },
     setActive(active) {
       this.$refs.list.active = active;

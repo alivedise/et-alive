@@ -36,7 +36,7 @@
 import { mapState } from 'vuex';
 import AppEcho from '@/components/AppEcho.vue';
 import AttributeChooser from '@/components/AttributeChooser.vue';
-import ATTRIBUTES from '@/constants/attributes.js';
+import ATTRIBUTES from '@/constants/attributes';
 
 export default {
   name: 'CalculatorMachPicker',

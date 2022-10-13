@@ -6,6 +6,21 @@
     :alt="echoName"
   >
     <slot />
+    <v-chip label outlined v-if="rawData" small>
+      <v-icon color="red">
+        mdi-heart
+      </v-icon>
+      {{rawData.attack}}
+    </v-chip>
+    <v-chip label outlined v-if="rawData" small>
+      <v-icon color="yellow">
+        mdi-sword
+      </v-icon>
+      {{rawData.attack}}
+    </v-chip>
+    <v-chip v-if="rawData" class="name" label light>
+      {{echoName}}
+    </v-chip>
   </v-img>
 </template>
 
@@ -25,6 +40,9 @@ export default {
     echoName() {
       return this.name || this.echoMapById[+this.eid]?.name;
     },
+    rawData() {
+      return this.echoMapById[+this.eid];
+    },
     localSrc() {
       if (!this.echoName) {
         return;
@@ -37,9 +55,15 @@ export default {
       return sify(x);
     },
   },
-}
+};
 </script>
 
-<style>
+<style less scoped>
+.name {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+}
 
 </style>

@@ -1,17 +1,18 @@
 const actions = {
-  saveCurrentData({
-    commit, rootGetters, state,
+  saveData({
+    commit, rootGetters, state, rootState,
   }) {
-    window.localStorage.setItem("gbmac-latest-data", rootGetters['calculator/urldata']);
-    commit('updateSession', state.manager.save({
+    const session = state.manager.save({
       data: rootGetters['calculator/urldata'],
       id: state.session,
       name: rootGetters['calculator/leaders'],
+      version: rootState['calculator/version'],
+      attribute: rootGetters['calculator/activeAttribute'],
       preview: `${rootGetters['calculator/leaders']}/攻${rootGetters['calculator/attackBoost']}/技${
         rootGetters['calculator/skillBoost']
       }%/奧${rootGetters['calculator/skillBoost']}%`,
-    }));
-    window.localStorage.setItem("gbmac-latest-id", state.session);
+    });
+    commit('updateSession', session);
   },
 };
 

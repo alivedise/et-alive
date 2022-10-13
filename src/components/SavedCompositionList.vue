@@ -4,7 +4,7 @@
     absolute
     temporary
     :style="{ 'z-index': 9999 }"
-    v-show="compositionDataManager.compositions.length"
+    v-show="composition.manager.compositions.length"
   >
     <v-list
       nav
@@ -12,17 +12,23 @@
     >
       <v-list-item :class="{
         primary: active === comp.id,
-      }" link v-for="comp in compositionDataManager.compositions" :key="comp.id" @click="load(comp)">
+      }" link v-for="comp in composition.manager.compositions" :key="comp.id" @click="load(comp)">
         <v-list-item-icon>
-          <v-chip class="job text-center" small label :class="{
-            primary: active === comp.id,
-          }">
-            {{ comp.preview.split('/')[1][0] }}
+          <v-chip
+            class="job text-center"
+            small
+            label
+            :class="{
+              primary: active === comp.id,
+            }"
+            :color="ATTRIBUTES[comp.attribute] ? ATTRIBUTES[comp.attribute].color : 'black'"
+          >
+            {{ comp.preview.split('/')[0][0] }}
           </v-chip>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{comp.name || '(未命名)'}}</v-list-item-title>
-          <v-list-item-subtitle>{{`${comp.preview.split('/')[0]}/${comp.preview.split('/')[1]}`}}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{`${comp.preview.split('/').slice(1)}`}}</v-list-item-subtitle>
           <v-list-item-subtitle>{{ new Date(comp.timestamp).toLocaleDateString() }} {{new Date(comp.timestamp).toLocaleTimeString()}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -31,18 +37,20 @@
 </template>
 
 <script>
+import ATTRIBUTES from '@/constants/attributes';
+import { mapState } from 'vuex';
+
 export default {
   name: "SavedCompositionList",
-  props: {
-    compositionDataManager: {
-      type: Object,
-    },
+  computed: {
+    ...mapState(['composition']),
   },
   data() {
     return {
       active: -1,
       drawer: false,
-    }
+      ATTRIBUTES,
+    };
   },
   methods: {
     load(comp) {

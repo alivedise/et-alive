@@ -1,5 +1,14 @@
 import { tify } from 'chinese-conv';
 const LIST = ['水', '火', '風', '土', '光', '暗'];
+function getIndex(val) {
+  if (Number.isInteger(val)) {
+    return val;
+  }
+  if (val === '地') {
+    val = '土';
+  }
+  return LIST.indexOf(tify(val));
+}
 
 export default {
   LIST,
@@ -27,13 +36,5 @@ export default {
     color: 'purple',
     'background-color': 'rgba(0, 0, 255, 0.3)',
   },
-  getIndex(val) {
-    if (Number.isInteger(val)) {
-      return val;
-    }
-    if (val === '地') {
-      val = '土';
-    }
-    return LIST.indexOf(tify(val));
-  },
+  getIndex,
 };

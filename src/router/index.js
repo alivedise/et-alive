@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: '/revive',
+    redirect: '/calculator',
   },
   {
     path: '/revive',
