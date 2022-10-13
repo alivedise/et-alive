@@ -39,6 +39,7 @@ fs.createReadStream('et.csv')
       attribute: row[0],
       attack: row[42],
       hp: row[43],
+      series: row[44] || '',
       data: {
         titan: {
           attack: toDecimal(row[3]) || 0,
