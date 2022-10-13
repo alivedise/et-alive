@@ -36,10 +36,20 @@ const theGetters = {
     return hpToAttack(state.hp, getters.calmBoost, getters.backwaterBoost)
   },
   constHp(state, getters, rootState, rootGetters) {
-    return getters.availableEchoList.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.hp || 0; }, 0);
+    return getters.availableEchoList.reduce((acc, obj) => {
+      if (!obj.id) {
+        return acc;
+      }
+      return acc + +rootGetters['echo/echoMapById'][obj.id]?.hp || 0;
+    }, 0);
   },
   constAttack(state, getters, rootState, rootGetters) {
-    return getters.availableEchoList.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.attack || 0; }, 0);
+    return getters.availableEchoList.reduce((acc, obj) => {
+      if (!obj.id) {
+        return acc;
+      }
+      return acc + +rootGetters['echo/echoMapById'][obj.id]?.attack || 0;
+    }, 0);
   },
   machBoost(state, getters, rootState, rootGetters) {
     const result = {

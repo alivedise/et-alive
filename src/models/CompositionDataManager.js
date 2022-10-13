@@ -56,6 +56,10 @@ export default class MachineDataManager {
     return window.localStorage.getItem("etac-latest-id") || '';
   }
 
+  updateSession(id) {
+    window.localStorage.setItem("etac-latest-id", id);
+  }
+
   save(data) {
     let id = (data.id !== '' && data.id >= 0) ? data.id : this.getSavingDataKey();
     data.id = id;

@@ -41,14 +41,14 @@
         cols="12"
       >
         <h5>The copyright of the data used on this site is owned by the following companies</h5>
-        </h5>©光焰網路科技</h5>
+        </h5>©ORLESH</h5>
       </v-col>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -69,11 +69,16 @@ export default {
         const { data } = this.$route.params;
         if (data) {
           this.loadData(data);
+          const session = this.composition.manager.getLatestId();
+          if (session !== null) {
+            this.updateSession(+session);
+          }
         }
       }, 1000);
     });
   },
   computed: {
+    ...mapState(['composition']),
     buildID() {
       return process.env.VUE_APP_GIT_HASH;
     },
@@ -81,6 +86,7 @@ export default {
   methods: {
     ...mapActions(['fetchData']),
     ...mapActions('calculator', ['loadData']),
+    ...mapMutations('composition', ['updateSession']),
     updateAvailable(event) {
       this.registration = event.detail;
       this.updateExists = true;

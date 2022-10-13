@@ -11,7 +11,7 @@
       dense
     >
       <v-list-item :class="{
-        primary: active === comp.id,
+        primary: composition.session === comp.id,
       }" link v-for="comp in composition.manager.compositions" :key="comp.id" @click="load(comp)">
         <v-list-item-icon>
           <v-chip
@@ -19,7 +19,7 @@
             small
             label
             :class="{
-              primary: active === comp.id,
+              primary: composition.session === comp.id,
             }"
             :color="ATTRIBUTES[comp.attribute] ? ATTRIBUTES[comp.attribute].color : 'black'"
           >
@@ -47,7 +47,6 @@ export default {
   },
   data() {
     return {
-      active: -1,
       drawer: false,
       ATTRIBUTES,
     };
@@ -59,7 +58,6 @@ export default {
         this.$emit('close');
         return;
       }
-      this.active = comp.id;
       this.$emit('load', comp);
     },
   },
