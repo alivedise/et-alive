@@ -25,37 +25,17 @@ module.exports = {
   },
 
   pwa: {
-    name: 'GBM alive',
+    name: 'ETADB',
     themeColor: '#0186d1',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
-    workboxOptions: {
-      skipWaiting: true,
-      clientsClaim: true,
-      runtimeCaching: [{
-        urlPattern: new RegExp('json'),
-        handler: 'networkFirst',
-        options: {
-          networkTimeoutSeconds: 20,
-          cacheName: 'json-cache',
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-        },
-      }, {
-        urlPattern: new RegExp('jpg|png'),
-        handler: 'cacheFirst',
-        options: {
-          cacheName: 'wiki-cache',
-          expiration: {
-            maxEntries: 5000,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-            // Automatically cleanup if quota is exceeded.
-            purgeOnQuotaError: true,
-          },
-        },
-      }],
+    iconPaths: {
+      favicon32: 'favicon.ico',
+      favicon16: 'favicon.ico',
+      appleTouchIcon: 'favicon.ico',
+      maskIcon: 'favicon.ico',
+      msTileImage: 'favicon.ico',
     },
   },
 };

@@ -1,4 +1,4 @@
-# vue-gbm-alive
+# et-alive
 
 ## Project setup
 ```

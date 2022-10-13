@@ -14,6 +14,15 @@
 
       <v-spacer></v-spacer>
 
+      <v-alert
+        class="update-container"
+        v-if="updateExists"
+      >
+        <v-btn @click="refreshApp" class="primary">
+          Update
+        </v-btn>
+      </v-alert>
+
       <v-btn
         href="https://github.com/alivedise/et-alive"
         target="_blank"
@@ -43,6 +52,13 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      refreshing: false,
+      registration: null,
+      updateExists: false,
+    };
+  },
   mounted() {
     window.app = this;
     this.fetchData().then(() => {
@@ -65,6 +81,42 @@ export default {
   methods: {
     ...mapActions(['fetchData']),
     ...mapActions('calculator', ['loadData']),
+    updateAvailable(event) {
+      this.registration = event.detail;
+      this.updateExists = true;
+    },
+    refreshApp() {
+      this.updateExists = false;
+      // Make sure we only send a 'skip waiting' message if the SW is waiting
+      if (!this.registration || !this.registration.waiting) {
+        return;
+      }
+      // Send message to SW to skip the waiting and activate the new SW
+      this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    },
+  },
+  created() {
+    if (window.$_serviceWorkerUpdate) {
+      this.updateAvailable({
+        detail: window.$_serviceWorkerUpdate,
+      });
+    } else {
+      document.addEventListener(
+        'serviceWorkerUpdateEvent', this.updateAvailable, { once: true }
+      );
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        // We'll also need to add 'refreshing' to our data originally set to false.
+        if (this.refreshing) {
+          return;
+        }
+        this.refreshing = true;
+        // Here the actual reload of the page occurs
+        window.location.reload();
+      });
+    }
   },
 };
 </script>

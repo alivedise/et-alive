@@ -29,11 +29,8 @@ const actions = {
   loadData({
     commit,
   }, data) {
-    console.log(data);
     data = JSON.parse(lzbase62.decompress(data));
-    console.log(data);
     const [ version, echo, machine, chara, attribute, hp, subEchoLimit] = data;
-    console.log(hp, attribute);
     commit('updateEcho', echo);
     commit('updateMach', machine);
     commit('updateAttribute', attribute);

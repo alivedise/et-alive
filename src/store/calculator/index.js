@@ -4,7 +4,6 @@ import mutations from './mutations';
 import Echo from '@/models/Echo';
 import Mach from '@/models/Mach';
 import ECHOLIMIT from '@/constants/echoLimit';
-console.log(ECHOLIMIT);
 
 function generateEcho() {
   return new Array(13).fill('').map(() => new Echo());
