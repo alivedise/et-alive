@@ -2,7 +2,7 @@
   <v-container>
     <v-btn
       @click.stop="showDrawer"
-      v-show="machineDataManager.machines.length"
+      v-show="compositionDataManager.compositions.length"
     >
       已儲存配置列表
     </v-btn>
@@ -29,15 +29,16 @@
     <v-btn v-if="name" outlined>
       {{name}}
     </v-btn>
-    <SavedMachineList
+    <SavedCompositionList
       :drawer="drawer"
       ref="list"
-      :machineDataManager="machineDataManager"
+      :compositionDataManager="compositionDataManager"
       @load="load"
     />
+    <CalculatorPortfolio />
     <AdvancedCalculator
       ref="calculator"
-      :machineDataManager="machineDataManager"
+      :compositionDataManager="compositionDataManager"
       @active="setActive"
       @namechange="setName"
     />
@@ -45,19 +46,21 @@
 </template>
 
 <script>
-import SavedMachineList from '@/components/SavedMachineList.vue';
+import SavedCompositionList from '@/components/SavedCompositionList.vue';
 import AdvancedCalculator from '@/components/AdvancedCalculator.vue';
-import MachineDataManager from '@/models/MachineDataManager';
+import MachineDataManager from '@/models/CompositionDataManager';
+import CalculatorPortfolio from '@/components/CalculatorPortfolio.vue';
 
 export default {
   name: 'CalculatorContainer',
   components: {
-    SavedMachineList,
+    SavedCompositionList,
     AdvancedCalculator,
+    CalculatorPortfolio,
   },
   data() {
     return {
-      machineDataManager: new MachineDataManager(),
+      compositionDataManager: new MachineDataManager(),
       drawer: false,
       forceRefresed: false,
       copied: false,

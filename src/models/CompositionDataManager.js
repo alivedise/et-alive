@@ -1,33 +1,33 @@
 export default class MachineDataManager {
   MAX_SLOT = 12;
 
-  PREFIX = 'gbmac-machine-';
+  PREFIX = 'etac-comp-';
 
   constructor() {
-    this.$machines = [];
-    this.getMachineList();
+    this.$comps = [];
+    this.getList();
   }
 
-  getMachineList() {
+  getList() {
     new Array(this.MAX_SLOT).fill('x').some((_, i) => {
       const machine = window.localStorage.getItem(`${this.PREFIX}${i}`);
       if (machine) {
-        this.$machines.push(JSON.parse(machine));
+        this.$comps.push(JSON.parse(machine));
       }
     });
   }
 
   clear() {
-    this.$machines = [];
+    this.$comps = [];
     new Array(this.MAX_SLOT).fill('x').some((_, i) => {
       window.localStorage.removeItem(`${this.PREFIX}${i}`);
     });
   }
 
   getSavingDataKey() {
-    let emptyId = this.$machines.length;
+    let emptyId = this.$comps.length;
     if (emptyId >= this.MAX_SLOT) {
-      emptyId = this.$machines.sort((a, b) => {
+      emptyId = this.$comps.sort((a, b) => {
         if (a.timestamp > b.timestamp) {
           return 1;
         }
@@ -40,8 +40,8 @@ export default class MachineDataManager {
     return emptyId;
   }
 
-  get machines() {
-    return this.$machines;
+  get compositions() {
+    return this.$comps;
   }
 
   save(data) {

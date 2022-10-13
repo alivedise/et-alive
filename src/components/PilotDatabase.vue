@@ -95,7 +95,6 @@ export default {
 
   mounted() {
     window.app3 = this;
-    this.$vuetify.theme.dark = false;
     const prefix =
       process.env.NODE_ENV === 'production' ? '/vue-gbm-alive/' : '/';
     axios

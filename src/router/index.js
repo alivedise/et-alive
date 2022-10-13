@@ -32,38 +32,6 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/machines',
-    name: 'Machine',
-    component: () => import(/* webpackChunkName: "machine" */ '../components/MachineDatabase.vue'),
-    children: [
-      {
-        path: ':category',
-        name: 'MachineModel',
-        component: () => import(/* webpackChunkName: "machine" */ '../components/MachineDatabase.vue'),
-      },
-    ],
-  },
-  {
-    path: '/pilots',
-    name: 'Pilot',
-    component: () => import(/* webpackChunkName: "pilot" */ '../components/PilotDatabase.vue'),
-    children: [
-      {
-        path: ':category',
-        name: 'PilotModel',
-        component: () => import(/* webpackChunkName: "pilot" */ '../components/PilotDatabase.vue'),
-      },
-    ],
-  },
-  {
-    path: '/legacy',
-    name: 'Legacy',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "legacy" */ '../components/LegacyDatabase.vue'),
-  },
 ];
 
 const router = new VueRouter({

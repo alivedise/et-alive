@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import { sify } from 'chinese-conv';
+import { mapState } from 'vuex';
 
 export default {
   name: "ReviveDatabase",
@@ -83,7 +83,7 @@ export default {
     search: "",
     parts: [],
     partTypeMap: [],
-    loading: true,
+    loading: false,
     showPositionPicker: false,
     headers: [
       { text: "ID", value: "id" },
@@ -99,8 +99,9 @@ export default {
   }),
 
   computed: {
+    ...mapState(['echo']),
     mappedParts() {
-      return this.parts.map((p) => {
+      return this.echo.data.map((p) => {
         return {
           ...p,
           image: `@/images/${sify(p.name)}.png`,
@@ -147,18 +148,6 @@ export default {
 
   mounted() {
     window.app1 = this;
-    this.$vuetify.theme.dark = false;
-    const prefix = process.env.NODE_ENV === "production" ? "/et-alive/" : "/";
-    axios
-      .get(`${prefix}etdata.json`, {
-        responseType: "json",
-      })
-      .then((data) => {
-        this.loading = false;
-        this.parts = data.data.data;
-      });
-    this.search = this.keyword;
-    this.labelFilter = this.filter ? this.filter.split(',').map(i => +i) : [];
   },
 };
 </script>
