@@ -28,6 +28,7 @@ const actions = {
   },
   loadData({
     commit,
+    state,
   }, data) {
     data = JSON.parse(lzbase62.decompress(data));
     const [ version, echo, machine, chara, attribute, hp, subEchoLimit] = data;

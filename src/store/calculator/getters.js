@@ -354,7 +354,7 @@ const theGetters = {
       rows, // echo data
       rowsMach, // machine data
       [], // chara data
-      state.attribute || -1,
+      state.attribute,
       state.hp || 100,
       state.subEchoLimit || 0,
     ];
