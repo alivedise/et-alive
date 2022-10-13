@@ -12,7 +12,7 @@
           width="1000"
           height="300"
           :name="machList[i].name"
-          position="top -100px center"
+          position="top -200px center"
         />
         <v-container v-else>
           <v-row justify="center" align="center">
