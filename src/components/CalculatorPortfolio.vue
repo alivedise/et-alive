@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="3">
+  <v-container clas>
+    <v-row class="mb-6">
+      <v-col lg="3">
         <v-card
           flat
           class="mx-auto"
@@ -38,7 +38,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="3">
+      <v-col lg="3">
         <v-card
           class="mx-auto"
           dark
@@ -80,7 +80,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="1">
+      <v-col lg="1">
         <v-card height="120" color="lime">
           <v-card-text>
             <v-container>
@@ -120,7 +120,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="2">
+      <v-col lg="2">
         <v-card
           class="mx-auto"
           light
@@ -165,7 +165,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="3">
+      <v-col lg="3">
         <v-card
           flat
           class="mx-auto"
@@ -175,6 +175,7 @@
         >
           <v-card-text>
             <v-sparkline
+              v-show="!$vuetify.breakpoint.mobile"
               :value="hpCurveArray"
               :gradient="['#f72047', '#ffd200', '#1feaea']"
               :smooth="false"

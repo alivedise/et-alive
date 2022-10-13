@@ -1,26 +1,55 @@
 <template>
-  <v-sheet class="echo-layout" height="600px">
-    <v-card
-      width="180px"
-      class="flex"
-      :key="i"
-      outlined
-      v-for="e, i in mainEchoList"
-      :data-index="i"
-      @click="pick(i)"
-    >
-      <AppEcho v-if="e.id" :eid="e.id" width="180" />
-      <v-container v-else fill-height>
-        <v-row justify="center" align="center">
-          <v-icon
-            x-large
-            color="silver darken-2"
+  <v-sheet width="100%">
+    <v-sheet class="echo-layout" height="600px" v-if="!$vuetify.breakpoint.mobile">
+      <v-card
+        width="180px"
+        class="flex"
+        :key="i"
+        outlined
+        v-for="e, i in mainEchoList"
+        :data-index="i"
+        @click="pick(i)"
+      >
+        <AppEcho v-if="e.id" :eid="e.id" width="180" />
+        <v-container v-else fill-height>
+          <v-row justify="center" align="center">
+            <v-icon
+              x-large
+              color="silver darken-2"
+            >
+              mdi-plus
+            </v-icon>
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-sheet>
+    <v-container v-else>
+      <v-row class="mb-6">
+        <v-col sm="2">
+          <v-card
+            width="100%"
+            class="flex"
+            :key="i"
+            outlined
+            v-for="e, i in mainEchoList"
+            :data-index="i"
+            @click="pick(i)"
           >
-            mdi-plus
-          </v-icon>
-        </v-row>
-      </v-container>
-    </v-card>
+            <AppEcho v-if="e.id" :eid="e.id" width="180" />
+            <v-container v-else fill-height>
+              <v-row justify="center" align="center">
+                <v-icon
+                  x-large
+                  color="silver darken-2"
+                >
+                  mdi-plus
+                </v-icon>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
     <Picker ref="picker" @choose="$updateActiveEcho" />
   </v-sheet>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="machine-base">
-    <v-col id="mach-layout" align="center" justify="center">
+    <v-col id="mach-layout" align="center" justify="center" v-if="!$vuetify.breakpoint.mobile">
       <v-card
         v-for="m, i in new Array(2)"
         :key=i
@@ -26,6 +26,36 @@
         </v-container>
       </v-card>
     </v-col>
+    <v-container v-else>
+      <v-row class="mb-6">
+        <v-col sm="2">
+          <v-card
+            v-for="m, i in new Array(2)"
+            :key=i
+            @click="pick(i)"
+            outlined
+          >
+            <AppEcho
+              v-if="machList[i]"
+              width="1000"
+              height="300"
+              :name="machList[i].name"
+              position="center center"
+            />
+            <v-container v-else>
+              <v-row justify="center" align="center">
+                <v-icon
+                  x-large
+                  color="silver darken-2"
+                >
+                  mdi-plus
+                </v-icon>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
     <Picker ref="picker" @choose="$updateActiveMach" />
   </div>
 </template>
@@ -68,12 +98,22 @@ export default {
 
 <style lang="less" scoped>
 .machine-base {
-  position: absolute;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (min-width:961px) {
+   .machine-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .grid(@n, @i:2) when (@i <= @n) {

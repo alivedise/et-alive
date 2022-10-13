@@ -1,5 +1,7 @@
 <template>
-  <v-btn-toggle dense :value="value" v-on="$listeners">
+  <v-btn-toggle dense :value="value" v-on="$listeners"
+    :class="{vertical: !horizontal}"
+  >
     <v-btn
       class="toggle"
       v-for="a, i in new Array(SUB_ECHO_MAX + 1).fill('')"
@@ -22,6 +24,10 @@ export default {
     value: {
       default: -1,
     },
+    horizontal: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
   },
@@ -39,7 +45,7 @@ export default {
 .flex {
   display: flex;
 }
-.v-btn-toggle {
+.v-btn-toggle.vertical {
   flex-direction: column !important;
 }
 .toggle {

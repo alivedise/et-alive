@@ -79,10 +79,6 @@ export default {
           && (d.series.indexOf('神眠') < 0 && d.series.indexOf('天司') < 0 && d.series.indexOf('星垣') < 0)) {
           return false;
         }
-        if (!this.filterSubEcho
-          && (d.series.indexOf('神眠') >= 0 || d.series.indexOf('天司') >= 0)) {
-          return false;
-        }
         if (this.attribute === -1) {
           return true;
         }
