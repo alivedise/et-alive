@@ -35,6 +35,8 @@ const mutations = {
   },
   updateHp(state, data) {
     state.hp = data;
+
+    window.___saver && window.___saver.updateUrl();
   },
   updateSubEchoLimit(state, data) {
     state.subEchoLimit = data;

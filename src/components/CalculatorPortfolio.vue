@@ -189,6 +189,13 @@
               auto-draw
             ></v-sparkline>
           </v-card-text>
+          <v-slider
+            :min="1"
+            class="slider"
+            :value="calculator.hp"
+            :thumb-label="true"
+            @change="updateHp"
+          />
           <v-card-actions>
             <v-list-item class="grow">
               <v-row
@@ -241,7 +248,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapMutations('calculator', ['updateAttribute']),
+    ...mapMutations('calculator', ['updateAttribute', 'updateHp']),
     $updateAttribute(i) {
       this.updateAttribute(i);
       window.___saver.updateUrl();
@@ -253,5 +260,10 @@ export default {
 <style>
 .flex {
   display: flex;
+}
+.slider {
+  position: absolute;
+  bottom: -35px;
+  width: 100%;
 }
 </style>

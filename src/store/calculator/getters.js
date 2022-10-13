@@ -86,7 +86,8 @@ const theGetters = {
     return Math.round(100 * getters.titanAttackBoost
       * getters.greeceAttackBoost
       * getters.attributeBoost
-      * getters.starAttackBoost);
+      * getters.starAttackBoost
+      * getters.hpAttackBoost);
   },
   daBoost(state, getters, rootState, rootGetters) {
     return Math.round(100 * getters.availableEchoList.reduce(
@@ -233,7 +234,8 @@ const theGetters = {
     return Math.round(100 * getters.titanSkillBoost
       * getters.greeceSkillBoost
       * getters.attributeBoost
-      * getters.starSkillBoost);
+      * getters.starSkillBoost
+      * getters.hpAttackBoost);
   },
   titanSkillBoost(state, getters, rootState, rootGetters) {
     return getters.availableEchoList.reduce(
@@ -275,7 +277,8 @@ const theGetters = {
     return Math.round(100 * getters.titanBurstBoost
       * getters.greeceBurstBoost
       * getters.attributeBoost
-      * getters.starBurstBoost);
+      * getters.starBurstBoost
+      * getters.hpAttackBoost);
   },
   titanBurstBoost(state, getters, rootState, rootGetters) {
     return getters.availableEchoList.reduce(
