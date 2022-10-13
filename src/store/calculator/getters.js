@@ -9,7 +9,7 @@ function hpToAttack(hp, calm, backwater) {
   if (calm && hp >= 25) {
     a += (hp - 25) * (0.0192 * calm);
   }
-  if (backwater && backwater <= 75) {
+  if (backwater && hp <= 75) {
     b += (75 - hp) * (0.0192 * backwater);
   }
   return (1 + a / 100) * (1 + b / 100);
