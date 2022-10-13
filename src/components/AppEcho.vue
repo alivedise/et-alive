@@ -10,7 +10,7 @@
       <v-icon color="red">
         mdi-heart
       </v-icon>
-      {{rawData.attack}}
+      {{rawData.hp}}
     </v-chip>
     <v-chip label outlined v-if="rawData" small>
       <v-icon color="yellow">
