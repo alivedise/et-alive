@@ -6,16 +6,24 @@ const mutations = {
     state.mach[index].id = +mach.id;
   },
   updateEcho(state, echo) {
-    state.echo.forEach((e, i) => e.update(echo[i][0]));
+    state.echo.forEach((e, i) => {
+      if (!echo[i]) {
+        return;
+      }
+      e.update(echo[i]);
+    });
   },
   updateMach(state, data) {
-    state.mach.forEach((e, i) => e.update(data[i][0]));
+    state.mach.forEach((e, i) => e.update(data[i]));
   },
   updateAttribute(state, data) {
     state.attribute = data;
   },
   updateHp(state, data) {
     state.hp = data;
+  },
+  updateSubEchoLimit(state, data) {
+    state.subEchoLimit = data;
   },
 };
 

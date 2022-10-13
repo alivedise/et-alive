@@ -5,7 +5,7 @@
       class="flex"
       :key="i"
       outlined
-      v-for="e, i in calculator.echo"
+      v-for="e, i in mainEchoList"
       :data-index="i"
       @click="pick(i)"
     >
@@ -41,6 +41,7 @@ export default {
   }),
   computed: {
     ...mapState(['calculator']),
+    ...mapGetters('calculator', ['mainEchoList']),
   },
   methods: {
     ...mapActions('calculator', ['updateActiveEcho']),

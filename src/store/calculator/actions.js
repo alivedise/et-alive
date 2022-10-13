@@ -31,12 +31,13 @@ const actions = {
   }, data) {
     data = JSON.parse(lzbase62.decompress(data));
     console.log(data);
-    const [ version, echo, machine, chara, attribute, hp] = data;
+    const [ version, echo, machine, chara, attribute, hp, subEchoLimit] = data;
     console.log(hp, attribute);
     commit('updateEcho', echo);
     commit('updateMach', machine);
     commit('updateAttribute', attribute);
     commit('updateHp', hp);
+    commit('updateSubEchoLimit', subEchoLimit || 0);
     /**
       data[1].forEach(([main, sub, active, tag1, tag2], index) => {
         console.log(main, sub, active, tag1, tag2);

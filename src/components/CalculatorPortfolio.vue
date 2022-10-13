@@ -180,6 +180,7 @@
               :smooth="false"
               :padding="true"
               line-width="2"
+              height="35"
               stroke-linecap="round"
               gradient-direction="top"
               :fill="false"

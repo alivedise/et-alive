@@ -43,13 +43,15 @@ export default {
   data: () => ({
     opened: false,
     attribute: -1,
+    filterSubEcho: false,
   }),
   components: {
     AppEcho,
     AttributeChooser,
   },
   methods: {
-    open() {
+    open(sub = false) {
+      this.filterSubEcho = !!sub;
       this.attribute = this.calculator.attribute;
       this.opened = true;
     },
@@ -73,6 +75,14 @@ export default {
     ...mapState(['echo', 'calculator']),
     filterEcho() {
       return this.echo.data.filter((d) => {
+        if (this.filterSubEcho
+          && (d.series.indexOf('神眠') < 0 && d.series.indexOf('天司') < 0 && d.series.indexOf('星垣') < 0)) {
+          return false;
+        }
+        if (!this.filterSubEcho
+          && (d.series.indexOf('神眠') >= 0 || d.series.indexOf('天司') >= 0)) {
+          return false;
+        }
         if (this.attribute === -1) {
           return true;
         }

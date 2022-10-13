@@ -3,6 +3,7 @@
     <v-container>
       <v-row class="test">
         <CompMachList @update="updateUrl" />
+        <SubEchoList @update="updateUrl" />
         <CompEchoList @update="updateUrl" />
       </v-row>
     </v-container>
@@ -13,6 +14,7 @@
 import { directive as onClickaway } from 'vue-clickaway';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import CompMachList from './CompMachList.vue';
+import SubEchoList from './CalculatorSubEchoList.vue';
 import CompEchoList from './CompEchoList.vue';
 
 export default {
@@ -23,6 +25,7 @@ export default {
   components: {
     CompMachList,
     CompEchoList,
+    SubEchoList,
   },
   computed: {
     ...mapState(['calculator']),

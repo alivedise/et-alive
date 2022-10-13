@@ -31,21 +31,14 @@
 </template>
 
 <script>
-import { directive as onClickaway } from "vue-clickaway";
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
+import {
+  mapActions, mapGetters, mapState,
+} from 'vuex';
 import Picker from './CalculatorMachPicker.vue';
 import AppEcho from './AppEcho.vue';
 
 export default {
-  name: "CalculatorMachList",
-  props: {
-    compositionDataManager: {
-      type: Object,
-    },
-  },
-  directives: {
-    onClickaway,
-  },
+  name: 'CalculatorMachList',
   components: {
     Picker,
     AppEcho,
@@ -88,22 +81,6 @@ export default {
     grid-area: ~"sub@{i}";
   }
   .grid(@n,(@i + 1));
-}
-
-.test {
-  position: relative;
-}
-
-.echo-name {
-  background-color: rgba(0, 0, 255, 0.3) !important;
-}
-.machine-layout {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #mach-layout {

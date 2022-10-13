@@ -3,9 +3,11 @@ import actions from './actions';
 import mutations from './mutations';
 import Echo from '@/models/Echo';
 import Mach from '@/models/Mach';
+import ECHOLIMIT from '@/constants/echoLimit';
+console.log(ECHOLIMIT);
 
 function generateEcho() {
-  return new Array(10).fill('').map(() => new Echo());
+  return new Array(13).fill('').map(() => new Echo());
 }
 
 function generateMachine() {
@@ -22,6 +24,8 @@ const state = {
   mach: generateMachine(),
   chara: [],
   hp: 100,
+  subEchoLimit: 0,
+  subMachLimit: 3,
 };
 
 const calculator = {

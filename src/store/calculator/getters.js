@@ -1,6 +1,7 @@
 import lzbase62 from 'lzbase62';
 import { tify } from 'chinese-conv';
 import ATTRIBUTES from '@/constants/attributes.js';
+import ECHOLIMIT from '@/constants/echoLimit.js';
 
 function hpToAttack(hp, calm, backwater) {
   let a = 0;
@@ -15,6 +16,15 @@ function hpToAttack(hp, calm, backwater) {
 }
 
 const theGetters = {
+  mainEchoList(state) {
+    return state.echo.slice(0, ECHOLIMIT.MAIN_ECHO_LIMIT);
+  },
+  subEchoList(state) {
+    return state.echo.slice(ECHOLIMIT.MAIN_ECHO_LIMIT, ECHOLIMIT.TOTAL_ECHO_LIMIT);
+  },
+  availableEchoList(state, getters) {
+    return state.echo.slice(0, ECHOLIMIT.MAIN_ECHO_LIMIT + state.subEchoLimit);
+  },
   hpCurveArray(state, getters) {
     const a = [];
     for (let i = 0; i <= 100; i += 5) {
@@ -26,10 +36,10 @@ const theGetters = {
     return hpToAttack(state.hp, getters.calmBoost, getters.backwaterBoost)
   },
   constHp(state, getters, rootState, rootGetters) {
-    return state.echo.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.hp || 0; }, 0);
+    return getters.availableEchoList.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.hp || 0; }, 0);
   },
   constAttack(state, getters, rootState, rootGetters) {
-    return state.echo.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.attack || 0; }, 0);
+    return getters.availableEchoList.reduce((acc, obj) => { return acc + +rootGetters['echo/echoMapById'][obj.id]?.attack || 0; }, 0);
   },
   machBoost(state, getters, rootState, rootGetters) {
     const result = {
@@ -69,7 +79,7 @@ const theGetters = {
       * getters.starAttackBoost);
   },
   daBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -84,7 +94,7 @@ const theGetters = {
     ));
   },
   taBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -99,7 +109,7 @@ const theGetters = {
     ));
   },
   criBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -114,7 +124,7 @@ const theGetters = {
     ));
   },
   skillLimitBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -129,7 +139,7 @@ const theGetters = {
     ));
   },
   burstLimitBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -144,7 +154,7 @@ const theGetters = {
     ));
   },
   calmBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -159,7 +169,7 @@ const theGetters = {
     ));
   },
   backwaterBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * state.echo.reduce(
+    return Math.round(100 * getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -174,7 +184,7 @@ const theGetters = {
     ));
   },
   titanAttackBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -186,7 +196,7 @@ const theGetters = {
     );
   },
   greeceAttackBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -198,7 +208,7 @@ const theGetters = {
     );
   },
   starAttackBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -216,7 +226,7 @@ const theGetters = {
       * getters.starSkillBoost);
   },
   titanSkillBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -228,7 +238,7 @@ const theGetters = {
     );
   },
   greeceSkillBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -240,7 +250,7 @@ const theGetters = {
     );
   },
   starSkillBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -258,7 +268,7 @@ const theGetters = {
       * getters.starBurstBoost);
   },
   titanBurstBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -270,7 +280,7 @@ const theGetters = {
     );
   },
   greeceBurstBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -282,7 +292,7 @@ const theGetters = {
     );
   },
   starBurstBoost(state, getters, rootState, rootGetters) {
-    return state.echo.reduce(
+    return getters.availableEchoList.reduce(
       (acc, obj) => {
         const echo = rootGetters['echo/echoMapById'][obj.id];
         if (echo && state.attribute === ATTRIBUTES.getIndex(echo.attribute)) {
@@ -316,16 +326,12 @@ const theGetters = {
   },
   urldata(state) {
     const rows = Object.values(state.echo).map((p) => {
-      return [
-        [p.id, p.skillLevel, p.level, p.bonusLevel],
-        // id, skill level, echo level, bonus level,
-      ];
+      return [p.id, p.skillLevel, p.level, p.bonusLevel];
+      // id, skill level, echo level, bonus level,
     });
     const rowsMach = Object.values(state.mach).map((p) => {
-      return [
-        [p.id, p.limitLevel],
-        // id, skill level, echo level, bonus level,
-      ];
+      return [p.id, p.limitLevel];
+      // id, skill level, echo level, bonus level,
     });
     const data = [
       1, // data versioning
@@ -334,6 +340,7 @@ const theGetters = {
       [], // chara data
       state.attribute || -1,
       state.hp || 100,
+      state.subEchoLimit || 0,
     ];
     return lzbase62.compress(JSON.stringify(data));
   },
