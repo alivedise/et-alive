@@ -18,6 +18,9 @@
           </v-icon>
           {{support.nick}}
           </v-card-title>
+          <v-card-subtitle>
+            {{echoBrief}}
+          </v-card-subtitle>
           <v-card-actions>
             <v-list-item class="grow">
               <v-row
@@ -45,39 +48,31 @@
           color="dark"
           height="120"
         >
-          <v-card-text>
-            <v-container>
-              <v-row align="center" justify="center">
-                <v-col>
-                  <v-row class="text-h5">
-                    {{attackBoost}}%
-                  </v-row>
-                  <v-row class="text-h7">
-                    攻擊力
-                  </v-row>
-                </v-col>
-                <v-col>
-                  <v-row class="text-h5">
-                    {{skillBoost}}%
-                  </v-row>
-                  <v-row class="text-h7">
-                    技能攻擊
-                  </v-row>
-                </v-col>
-                <v-col>
-                  <v-row class="text-h5">
-                    {{burstBoost}}%
-                  </v-row>
-                  <v-row class="text-h7">
-                    爆發攻擊
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
           <v-card-actions class="action">
             <attribute-chooser :value="calculator.attribute" @change="$updateAttribute" />
           </v-card-actions>
+          <v-card-text class="times">
+            <v-row align="center" justify="center">
+              <v-col>
+                <v-row class="text-h5">
+                  {{attackBoost}}
+                  <v-chip x-small>
+                  期望普攻倍率
+                  </v-chip>
+                </v-row>
+              </v-col>
+              <v-col>
+                {{skillBoost}}
+                <v-chip x-small>
+                  期望共鳴倍率
+                </v-chip>
+                {{burstBoost}}
+                <v-chip x-small>
+                  期望調律倍率
+                </v-chip>
+              </v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col lg="1">
@@ -96,7 +91,7 @@
                         :value="daBoost"
                         color="primary"
                       >
-                        <div class="text-h4">{{daBoost}}</div>%
+                        <div class="text-h5">{{daBoost}}</div>%
                       </v-progress-circular>
                     </v-badge>
                   </v-row>
@@ -110,7 +105,7 @@
                         :value="taBoost"
                         color="orange"
                       >
-                        <div class="text-h4">{{taBoost}}</div>%
+                        <div class="text-h5">{{taBoost}}</div>%
                       </v-progress-circular>
                     </v-badge>
                   </v-row>
@@ -141,7 +136,7 @@
                         :value="skillLimitBoost"
                         color="secondary"
                       >
-                        <div class="text-h4">{{skillLimitBoost}}</div>%
+                        <div class="text-h5">{{skillLimitBoost}}</div>%
                       </v-progress-circular>
                     </v-badge>
                   </v-row>
@@ -155,7 +150,7 @@
                         :value="burstLimitBoost"
                         color="purple"
                       >
-                        <div class="text-h4">{{burstLimitBoost}}</div>%
+                        <div class="text-h5">{{burstLimitBoost}}</div>%
                       </v-progress-circular>
                     </v-badge>
                   </v-row>
@@ -194,7 +189,7 @@
             class="slider"
             :value="calculator.hp"
             thumb-label="always"
-            @change="updateHp"
+            @change="$updateHp"
           />
           <v-card-actions>
             <v-list-item class="grow">
@@ -244,13 +239,17 @@ export default {
       'leaders', 'main', 'support', 'guessAttributeColor',
       'constHp', 'constAttack', 'attackBoost', 'skillBoost', 'burstBoost', 'daBoost', 'taBoost',
       'skillLimitBoost', 'burstLimitBoost', 'calmBoost', 'backwaterBoost', 'hpCurveArray',
-      'criBoost',
+      'criBoost', 'echoBrief',
     ]),
   },
   methods: {
     ...mapMutations('calculator', ['updateAttribute', 'updateHp']),
     $updateAttribute(i) {
       this.updateAttribute(i);
+      window.___saver.updateUrl();
+    },
+    $updateHp(i) {
+      this.updateHp(i);
       window.___saver.updateUrl();
     },
   },
@@ -266,5 +265,11 @@ export default {
   bottom: -35px;
   width: 100%;
   z-index: 9999;
+}
+</style>
+
+<style lang="less" scoped>
+.times {
+  padding-top: 0 !important;
 }
 </style>

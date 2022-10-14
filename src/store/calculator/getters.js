@@ -15,7 +15,37 @@ function hpToAttack(hp, calm, backwater) {
   return (1 + a / 100) * (1 + b / 100);
 }
 
+function shortenEchoName(name) {
+  if (name.indexOf('阿爾法') >= 0) {
+    return 'α';
+  }
+  if (name.indexOf('貝塔') >= 0) {
+    return 'β';
+  }
+  if (name.indexOf('伽瑪') >= 0) {
+    return 'γ';
+  }
+  if (name.indexOf('德爾塔') >= 0) {
+    return 'δ';
+  }
+  return name.substr(0, 2);
+}
+
 const theGetters = {
+  echoBrief(state, getters, rootState, rootGetters) {
+    const map = {};
+    getters.availableEchoList.forEach((e) => {
+      const d = rootGetters['echo/echoMapById'][e.id];
+      if (!d) {
+        return;
+      }
+      if (!map[d.name]) {
+        map[d.name] = 0;
+      }
+      map[d.name] += 1;
+    });
+    return Object.entries(map).map(([e, i]) => `${shortenEchoName(e)}${i}`).join('/');
+  },
   mainEchoList(state) {
     return state.echo.slice(0, ECHOLIMIT.MAIN_ECHO_LIMIT);
   },
@@ -82,12 +112,15 @@ const theGetters = {
     }
     return result;
   },
+  attackBoostPercentage(state, getters, rootState, rootGetters) {
+    return Math.round(100 * getters.$attackBoost);
+  },
   attackBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * getters.titanAttackBoost
+    return (getters.titanAttackBoost
       * getters.greeceAttackBoost
       * getters.attributeBoost
       * getters.starAttackBoost
-      * getters.hpAttackBoost);
+      * getters.hpAttackBoost).toFixed(2);
   },
   daBoost(state, getters, rootState, rootGetters) {
     return Math.round(100 * getters.availableEchoList.reduce(
@@ -230,12 +263,17 @@ const theGetters = {
       1,
     );
   },
+  skillBoostPercentage(state, getters, rootState, rootGetters) {
+    return Math.round(100 * getters.$skillBoost);
+  },
   skillBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * getters.titanSkillBoost
+    return (
+      getters.attackBoost
+      * getters.titanSkillBoost
       * getters.greeceSkillBoost
-      * getters.attributeBoost
       * getters.starSkillBoost
-      * getters.hpAttackBoost);
+      * getters.hpAttackBoost
+    ).toFixed(2);
   },
   titanSkillBoost(state, getters, rootState, rootGetters) {
     return getters.availableEchoList.reduce(
@@ -273,12 +311,17 @@ const theGetters = {
       1,
     );
   },
+  burstBoostPercentage(state, getters, rootState, rootGetters) {
+    return Math.round(100 * getters.burstBoost);
+  },
   burstBoost(state, getters, rootState, rootGetters) {
-    return Math.round(100 * getters.titanBurstBoost
+    return (
+      getters.attackBoost
+      * getters.titanBurstBoost
       * getters.greeceBurstBoost
-      * getters.attributeBoost
       * getters.starBurstBoost
-      * getters.hpAttackBoost);
+      * getters.hpAttackBoost
+    ).toFixed(2);
   },
   titanBurstBoost(state, getters, rootState, rootGetters) {
     return getters.availableEchoList.reduce(
