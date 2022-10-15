@@ -22,7 +22,7 @@ const mutations = {
       if (!d) {
         return;
       }
-      if (d.series.indexOf('神眠') >= 0 || d.series.indexOf('天司') >= 0) {
+      if (d.series.indexOf('天司') >= 0) {
         e.update([0, 0, 0, 0, 0, 0]);
       }
     });

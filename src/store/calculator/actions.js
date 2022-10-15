@@ -8,7 +8,7 @@ const actions = {
     rootGetters,
   }, data) {
     if (data && data.echo) {
-      if (data.echo.series.indexOf('神眠') >= 0 || data.echo.series.indexOf('天司') >= 0) {
+      if (data.echo.series.indexOf('天司') >= 0) {
         commit('clearExistingGodPrisonEcho', rootGetters['echo/echoMapById']);
       }
     }
