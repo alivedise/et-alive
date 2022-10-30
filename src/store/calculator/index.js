@@ -24,7 +24,7 @@ const state = {
   mach: generateMachine(),
   chara: [],
   hp: 100,
-  subEchoLimit: 0,
+  subEchoLimit: 1,
   subMachLimit: 3,
 };
 

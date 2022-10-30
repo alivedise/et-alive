@@ -1,5 +1,5 @@
 export default class MachineDataManager {
-  MAX_SLOT = 12;
+  MAX_SLOT = 6 * 6;
 
   PREFIX = 'etac-comp-';
 
